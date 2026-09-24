@@ -36,7 +36,7 @@ desligar essa exigência com `MFA_REQUIRED_FOR_PRIVILEGED_USERS=False` no `.env`
 
 ```bash
 # instale o uv: https://docs.astral.sh/uv/
-uv sync                       # cria .venv com Python 3.13 e as dependências
+uv sync                       # cria .venv com Python 3.14 e as dependências
 cp .env.example .env          # e troque "db" por "localhost" no DATABASE_URL
 docker compose up -d db       # só o banco
 uv run pytest --cov

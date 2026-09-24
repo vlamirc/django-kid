@@ -62,7 +62,7 @@ Rode `make` para ver todos os atalhos. Os mais usados:
 
 ## Tecnologias
 
-Python 3.13 · Django 5.2 LTS · PostgreSQL 17 · django-allauth · django-rules ·
+Python 3.14 · Django 5.2 LTS · PostgreSQL 17 · django-allauth · django-rules ·
 WhiteNoise · Gunicorn · pytest · ruff · uv · Docker
 
 ## Créditos

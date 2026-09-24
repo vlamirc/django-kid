@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------
 # base: Python + uv + dependências de produção
 # ---------------------------------------------------------------------------
-FROM python:3.13-slim-bookworm AS base
+FROM python:3.14-slim-bookworm AS base
 
 COPY --from=ghcr.io/astral-sh/uv:0.8 /uv /uvx /bin/
 
