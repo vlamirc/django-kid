@@ -1,0 +1,76 @@
+[project]
+name = "django-kid"
+version = "0.1.0"
+description = "Blog em Django para aprendizado: boas práticas, TDD, segurança e deploy simples."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "django>=5.2,<5.3",
+    "django-allauth[mfa]>=65.0,<66",
+    "django-environ>=0.12",
+    "psycopg[binary]>=3.2",
+    "rules>=3.5",
+    "argon2-cffi>=23.1",
+    "whitenoise>=6.9",
+    "gunicorn>=23.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-django>=4.10",
+    "pytest-cov>=6.0",
+    "factory-boy>=3.3",
+    "ruff>=0.16",
+    "pre-commit>=4.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py"]
+addopts = "--reuse-db --strict-markers"
+filterwarnings = [
+    "error::RuntimeWarning",
+    # O WhiteNoise avisa que ainda não rodamos collectstatic; nos testes isso é esperado.
+    "ignore:No directory at:UserWarning",
+]
+
+[tool.coverage.run]
+source = ["apps", "config"]
+branch = true
+omit = ["*/migrations/*", "*/tests/*", "config/asgi.py", "config/wsgi.py"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+extend-exclude = ["*/migrations/*"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes
+    "I",        # isort
+    "B",        # bugbear
+    "UP",       # pyupgrade
+    "DJ",       # boas práticas de Django
+    "S",        # segurança (bandit)
+    "SIM",      # simplificações
+    "C4",       # comprehensions
+    "PT",       # pytest
+    "RUF",
+]
+# RUF012 reclama das classes Meta do Django, que são listas/dicts por convenção.
+ignore = ["RUF012"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/*" = ["S101", "S105", "S106", "S107"]
+"conftest.py" = ["S101"]
+"apps/blog/management/commands/seed_demo.py" = ["S105"]

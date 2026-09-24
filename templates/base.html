@@ -1,0 +1,60 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Django Kid{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'theme/img/favicon.ico' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300,400,600,700,800&display=swap"
+              rel="stylesheet">
+        {# Tema Clean Blog (Start Bootstrap, MIT). Já inclui o Bootstrap 5. #}
+        <link href="{% static 'theme/css/clean-blog.css' %}" rel="stylesheet">
+        <link href="{% static 'css/site.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <a class="visually-hidden-focusable" href="#content">Pular para o conteúdo</a>
+        {% include "includes/navbar.html" %}
+
+        {% block masthead %}
+            <header class="masthead masthead-compact"
+                    style="background-image: url('{% static "theme/img/about-bg.jpg" %}')">
+                <div class="container position-relative px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            <div class="page-heading">
+                                <h1>{% block heading %}Django Kid{% endblock %}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+
+        <main id="content" class="container px-4 px-lg-5 mb-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    {% block before_content %}{% endblock %}
+                    {% include "includes/messages.html" %}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </main>
+
+        <footer class="border-top">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="small text-center text-muted fst-italic">
+                            Django Kid, um blog para aprender Django.
+                            Tema <a href="https://startbootstrap.com/theme/clean-blog">Clean Blog</a> por Start Bootstrap.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="{% static 'theme/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'theme/js/clean-blog.js' %}"></script>
+        {% block extra_body %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Acesso negado | Django Kid{% endblock %}
+{% block heading %}Acesso negado{% endblock %}
+{% block content %}
+    <p>Você não tem permissão para acessar esta página.</p>
+    <p><a href="{% url 'blog:post_list' %}">Voltar para o início</a></p>
+{% endblock %}

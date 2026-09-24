@@ -1,0 +1,19 @@
+{% extends "allauth/layouts/base.html" %}
+{% block heading %}Minha conta{% endblock %}
+{% block before_content %}
+    {% url 'account_email' as email_url %}
+    {% url 'account_change_password' as password_url %}
+    {% url 'mfa_index' as mfa_url %}
+    <ul class="nav nav-pills mb-4">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == email_url %}active{% endif %}" href="{{ email_url }}">E-mail</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == password_url %}active{% endif %}" href="{{ password_url }}">Senha</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if mfa_url in request.path %}active{% endif %}" href="{{ mfa_url }}">Autenticação em dois fatores</a>
+        </li>
+    </ul>
+{% endblock %}
+{% block content %}{% endblock %}

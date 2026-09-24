@@ -1,0 +1,12 @@
+{% if page_obj.has_other_pages %}
+    <nav aria-label="Paginação" class="d-flex justify-content-between mb-4">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-primary" href="?page={{ page_obj.previous_page_number }}">&larr; Mais recentes</a>
+        {% else %}
+            <span></span>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary text-uppercase" href="?page={{ page_obj.next_page_number }}">Posts anteriores &rarr;</a>
+        {% endif %}
+    </nav>
+{% endif %}

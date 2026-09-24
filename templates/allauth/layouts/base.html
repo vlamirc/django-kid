@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% comment %}
+    Faz as telas do django-allauth (login, cadastro, 2FA...) usarem o layout do site.
+    Os "elements" em templates/allauth/elements/ vêm do projeto de exemplo do
+    django-allauth (MIT) e aplicam o Bootstrap aos formulários.
+{% endcomment %}
+{% block title %}{% block head_title %}{% endblock %} | Django Kid{% endblock %}

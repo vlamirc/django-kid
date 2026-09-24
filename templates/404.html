@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Página não encontrada | Django Kid{% endblock %}
+{% block heading %}Página não encontrada{% endblock %}
+{% block content %}
+    <p>O endereço que você procurou não existe ou foi removido.</p>
+    <p><a href="{% url 'blog:post_list' %}">Voltar para o início</a></p>
+{% endblock %}

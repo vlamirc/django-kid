@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+
+  test:
+    name: Testes
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: blog
+          POSTGRES_USER: blog
+          POSTGRES_PASSWORD: blog
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U blog -d blog"
+          --health-interval 2s --health-timeout 5s --health-retries 20
+    env:
+      SECRET_KEY: ci
+      DATABASE_URL: postgres://blog:blog@localhost:5432/blog
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked
+      - name: Migrações em dia com os modelos
+        run: uv run python manage.py makemigrations --check --dry-run
+      - name: Testes com cobertura
+        run: uv run pytest --cov --cov-report=term
+      - name: Checagem de segurança para produção
+        env:
+          DEBUG: "False"
+          SECRET_KEY: ${{ github.run_id }}-uma-chave-longa-e-aleatoria-so-para-o-check-de-deploy
+          ALLOWED_HOSTS: exemplo.com
+        run: uv run python manage.py check --deploy --fail-level WARNING
+
+  docker:
+    name: Ambiente Docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Ambiente de desenvolvimento sobe e passa nos testes
+        run: |
+          cp .env.example .env
+          docker compose build
+          docker compose run --rm web pytest -q
+      - name: Imagem de produção
+        run: docker build --target prod -t django-kid:prod .

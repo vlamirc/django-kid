@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static rules %}
+{% block title %}{{ post.title }} | Django Kid{% endblock %}
+{% block masthead %}
+    <header class="masthead" style="background-image: url('{% static "theme/img/post-bg.jpg" %}')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-heading">
+                        <h1>{{ post.title }}</h1>
+                        {% if post.subtitle %}<h2 class="subheading">{{ post.subtitle }}</h2>{% endif %}
+                        <span class="meta">
+                            Por {{ post.author.display_name }}
+                            {% if post.is_published %}
+                                em {{ post.published_at|date:"j \d\e F \d\e Y" }}
+                            {% else %}
+                                <span class="badge text-bg-warning">Rascunho</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+{% block content %}
+    <article class="post-body">{{ post.body|linebreaks }}</article>
+    {% has_perm "blog.change_post" user post as can_change %}
+    {% if can_change %}
+        <div class="d-flex gap-2 mt-5">
+            <a class="btn btn-outline-primary" href="{% url 'blog:post_update' post.slug %}">Editar</a>
+            <a class="btn btn-outline-danger" href="{% url 'blog:post_delete' post.slug %}">Excluir</a>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Meus posts | Django Kid{% endblock %}
+{% block heading %}Meus posts{% endblock %}
+{% block content %}
+    <p><a class="btn btn-primary" href="{% url 'blog:post_create' %}">Escrever novo post</a></p>
+    <div class="list-group mb-4">
+        {% for post in posts %}
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               href="{{ post.get_absolute_url }}">
+                {{ post.title }}
+                <span class="badge {% if post.is_published %}text-bg-success{% else %}text-bg-warning{% endif %}">{{ post.get_status_display }}</span>
+            </a>
+        {% empty %}
+            <p class="text-muted">Você ainda não escreveu nenhum post.</p>
+        {% endfor %}
+    </div>
+    {% include "includes/pagination.html" %}
+{% endblock %}
