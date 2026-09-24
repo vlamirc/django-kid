@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Excluir post | Django Kid{% endblock %}
+{% block heading %}Excluir post{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>Tem certeza que deseja excluir <strong>{{ object.title }}</strong>? Esta ação não pode ser desfeita.</p>
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a class="btn btn-link" href="{{ object.get_absolute_url }}">Cancelar</a>
+    </form>
+{% endblock %}

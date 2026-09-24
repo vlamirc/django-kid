@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block masthead %}
+    <header class="masthead" style="background-image: url('{% static "theme/img/home-bg.jpg" %}')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Django Kid</h1>
+                        <span class="subheading">Um blog para aprender Django</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+{% block content %}
+    {% for post in posts %}
+        <div class="post-preview">
+            <a href="{{ post.get_absolute_url }}">
+                <h2 class="post-title">{{ post.title }}</h2>
+                {% if post.subtitle %}<h3 class="post-subtitle">{{ post.subtitle }}</h3>{% endif %}
+            </a>
+            <p class="post-meta">Por {{ post.author.display_name }} em {{ post.published_at|date:"j \d\e F \d\e Y" }}</p>
+        </div>
+        <hr class="my-4">
+    {% empty %}
+        <p class="text-muted">Nenhum post publicado ainda.</p>
+    {% endfor %}
+    {% include "includes/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,15 @@
+/* Ajustes do projeto sobre o tema Clean Blog. Mantenha este arquivo pequeno. */
+
+/* Cabeçalho mais baixo nas páginas internas (contas, formulários). */
+header.masthead.masthead-compact {
+  padding-top: calc(3rem + 57px);
+  padding-bottom: 3rem;
+}
+
+header.masthead.masthead-compact .page-heading h1 {
+  font-size: 2.5rem;
+}
+
+.post-body {
+  font-size: 1.15rem;
+}
