@@ -14,7 +14,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v7
       - run: uv sync --locked
       - run: uv run ruff check .
@@ -38,7 +38,7 @@ jobs:
       SECRET_KEY: ci
       DATABASE_URL: postgres://blog:blog@localhost:5432/blog
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v7
       - run: uv sync --locked
       - name: Migrações em dia com os modelos
@@ -56,7 +56,7 @@ jobs:
     name: Ambiente Docker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Ambiente de desenvolvimento sobe e passa nos testes
         run: |
           cp .env.example .env
