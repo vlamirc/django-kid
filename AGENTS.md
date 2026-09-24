@@ -8,7 +8,7 @@ O `CLAUDE.md` apenas importa este arquivo.
 Blog em Django feito para aprender boas práticas. Leia `docs/arquitetura.md`
 para o mapa do código e `docs/adr/` para as decisões já tomadas (e por quê).
 
-- Django 5.2 LTS, Python 3.13, PostgreSQL 17, dependências com `uv`.
+- Django 5.2 LTS, Python 3.14, PostgreSQL 17, dependências com `uv`.
 - Login, cadastro e 2FA: django-allauth (`allauth.account` e `allauth.mfa`).
 - Autorização: django-rules. Papéis em `apps/accounts/roles.py`, regras em `apps/<app>/rules.py`.
 - Interface: templates do Django + tema Start Bootstrap Clean Blog (Bootstrap 5), em `templates/`.
