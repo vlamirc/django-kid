@@ -26,8 +26,19 @@ Para algo real, use os planos pagos mais baratos da aplicação e do banco.
      de verificação não saem e ninguém consegue terminar o cadastro.
    - `DEFAULT_FROM_EMAIL`: por exemplo `Django Kid <nao-responda@seudominio.com>`.
 5. Espere o primeiro deploy. As migrações rodam sozinhas a cada deploy (`scripts/start-prod.sh`).
-6. Crie o administrador pelo **Shell** do serviço no painel do Render:
-   `python manage.py createsuperuser`. No primeiro login, ative o 2FA.
+6. Crie o administrador. O plano gratuito não tem **Shell**, então use variáveis de ambiente:
+   1. Em **Environment** do serviço, adicione `DJANGO_SUPERUSER_EMAIL`,
+      `DJANGO_SUPERUSER_PASSWORD` (12 caracteres ou mais) e, se quiser,
+      `DJANGO_SUPERUSER_USERNAME` (o padrão é a parte do e-mail antes do `@`).
+   2. Salve. O Render reinicia o serviço e o `scripts/start-prod.sh` roda
+      `python manage.py ensure_superuser`, que cria o administrador com o e-mail já
+      verificado (não precisa de SMTP para esse primeiro login). Veja nos **Logs** a linha
+      `ensure_superuser: administrador ... criado.`
+   3. Entre no site e ative o 2FA; o `/admin/` pede isso antes de abrir.
+   4. Apague `DJANGO_SUPERUSER_PASSWORD` do painel. O comando nunca altera um usuário que
+      já existe, então deixar as variáveis não troca a senha, mas não há por que guardar a senha ali.
+
+   Nos planos pagos, o **Shell** também serve: `python manage.py createsuperuser`.
 
 ### Domínio próprio
 
@@ -45,7 +56,7 @@ Nada disso é específico do Render; vale para qualquer plataforma:
 - **Gunicorn** como servidor, na porta da variável `PORT`.
 - **Health check** em `/healthz/` (verifica também o banco).
 - **Logs no stdout**, que a plataforma coleta.
-- **Migrações automáticas** ao iniciar.
+- **Migrações automáticas** ao iniciar, e administrador criado por variáveis de ambiente (`ensure_superuser`).
 
 ## Alternativas
 
